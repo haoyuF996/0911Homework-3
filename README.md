@@ -8,4 +8,7 @@ SanGuoRenWuBiao.txt
 
 SanGuoYanYi.txt
 
-BackGround.png
+## 运行需要下列库
+wordcloud
+
+jieba
