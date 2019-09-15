@@ -1,26 +1,19 @@
 def main():
     #加载三国人物表
-    pre_char_list = open('SanGuoRenWuBiao.txt','r',encoding='UTF-8').readlines()
+    pre_char_list = ('\n'.join(open('SanGuoRenWuBiao.txt','r',encoding='UTF-8').read().split(' '))).split('\n')#消除空格和换行符
     #生成词频统计词典 {(姓名，字):频率,......}
-    char_fre_dict = {}#初始化
-    for line in pre_char_list:
-        if line!='':#排除空行
-            words = line.split(' ')
-            #关联人物姓名和字
-            count=0
-            while count<len(words):#文本顺序为: 姓名 字 姓名 字.....
-                #删除空值
-                while words[count] == '':
-                    words.remove('')
-                if (-1)**count == 1:
-                    ming = words[count]#抓取姓名
-                else:
-                    zi = words[count]#抓取字
-                    char_fre_dict[(ming,zi)] = 0#初始数据添加入词典
-                count+=1
-
-    import jieba
+    char_fre_dict,count = {},0#初始化
+    #关联人物姓名和字
+    for i,word in enumerate(pre_char_list):#文本顺序为: 姓名 字 姓名 字.....
+        if word!='':#排除空字符
+            if (-1)**count == 1:
+                ming = word#抓取姓名
+            else:
+                zi = word#抓取字
+                char_fre_dict[(ming,zi)] = 0#初始数据添加入词典
+            count+=1
     #结巴分词
+    import jieba
     word_list = jieba.lcut(open('SanGuoYanYi.txt','r',encoding='UTF-8').read())
     #统计词频
     for word in word_list:
